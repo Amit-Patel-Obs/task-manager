@@ -1,11 +1,29 @@
 FROM php:8.3-apache
 
+# Install required system libraries
 RUN apt-get update && apt-get install -y \
-    git unzip curl libpng-dev libonig-dev libxml2-dev zip
+    git \
+    unzip \
+    curl \
+    zip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libpq-dev
 
-RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libxml2-dev libpq-dev
+# Install PHP extensions
+RUN docker-php-ext-install \
+    pdo \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    mbstring \
+    exif \
+    pcntl \
+    bcmath \
+    gd
 
-# Enable rewrite
+# Enable Apache rewrite
 RUN a2enmod rewrite
 
 # Set Apache to use Laravel public folder
